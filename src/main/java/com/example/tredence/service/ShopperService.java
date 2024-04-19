@@ -71,30 +71,17 @@ public class ShopperService {
         shopperRepository.saveAll(shopper);
     }
 
-    // Other service methods...
 
-/*
-        public Page<ProductDTO> getPersonalizedProductList(String shopperId, String category, String brand,
-                                                           String productId, int limit, int page,
-                                                           String sortBy, String sortOrder) {
-            Sort.Direction sortDirection = sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-            Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, sortBy));
 
-            Specification<Product> spec = Specification.where(ProductSpecifications.filterByShopperId(shopperId));
-            if (category != null) {
-                spec = spec.and(ProductSpecifications.filterByCategory(category));
-            }
-            if (brand != null) {
-                spec = spec.and(ProductSpecifications.filterByBrand(brand));
-            }
-            if (productId != null) {
-                spec = spec.and(ProductSpecifications.filterByProductId(productId));
-            }
 
-            Page<Product> productPage = productRepository.findAll(spec, pageable);
-            return productPage.map(ProductDTO::fromEntity);
-        }
-    }*/
+
+
+    public Page<PersonalizedProduct> getPersonalizedProducts(String category, String brand, String productId,
+                                                             String sortBy, String sortOrder, Pageable pageable) {
+        return personalizedProductRepository.findAll
+                (category, brand, productId, sortBy , pageable);
+    }
+
 
 }
 

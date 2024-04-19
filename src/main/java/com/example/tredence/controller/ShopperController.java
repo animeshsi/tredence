@@ -9,6 +9,11 @@ import com.example.tredence.repository.ProductRepository;
 import com.example.tredence.service.ShopperService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,30 +49,26 @@ public class ShopperController {
     }
 
 
+        @GetMapping("/personalized-products")
+        public ResponseEntity<List<PersonalizedProduct>> getPersonalizedProducts(
+                @RequestParam(required = false) String category,
+                @RequestParam(required = false) String brand,
+                @RequestParam(required = false) String productId,
+                @RequestParam(defaultValue = "10") int limit,
+                @RequestParam(defaultValue = "relevancyScore") String sortBy,
+                @RequestParam(defaultValue = "desc") String sortOrder,
+                @RequestParam(defaultValue = "0") int page,
+                @RequestParam(defaultValue = "10") int size) {
 
-/*
-    @GetMapping("/shopper/{shopperId}/personalized-products")
-    public ResponseEntity<  List<ProductDto>> getPersonalizedProductList(
-            @PathVariable Long shopperId,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String brand,
-            @RequestParam(required = false) Long productId,
-            @RequestParam(defaultValue = "10") int limit,
-            @RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice,
-            @RequestParam(required = false) Integer minRating,
-            @RequestParam(defaultValue = "relevancyScore") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortOrder,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            Pageable pageable = PageRequest.of(page, size);
+            Page<PersonalizedProduct> products = shopperService.getPersonalizedProducts(category, brand, productId, sortBy, sortOrder, pageable);
 
-        List<ProductDTO> products = shopperService.getPersonalizedProductList(
-                shopperId, category, brand, productId, limit,
-                minPrice, maxPrice, minRating, sortBy, sortOrder, page, size);
+            return ResponseEntity.ok(products.getContent());
+        }
 
-        return ResponseEntity.ok(products);
-    }
-*/
 
-    // Other endpoints...
+
+
+
+
 }
