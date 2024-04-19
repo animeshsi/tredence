@@ -1,8 +1,13 @@
 package com.example.tredence.controller;
 
+import com.example.tredence.dto.PersonalizedProductDto;
+import com.example.tredence.dto.ShopperProductDto;
 import com.example.tredence.entity.PersonalizedProduct;
+import com.example.tredence.entity.Products;
+import com.example.tredence.entity.Shoppers;
 import com.example.tredence.repository.ProductRepository;
 import com.example.tredence.service.ShopperService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +24,9 @@ public class ShopperController {
     private ProductRepository productRepository;
 
     @PostMapping("/shopper/personalized-products")
-    public ResponseEntity<String> receivePersonalizedProducts(@RequestBody PersonalizedProduct productListDTO) {
+    public ResponseEntity<String> receivePersonalizedProducts(@RequestBody List<ShopperProductDto> shopperProductDtoList ) {
         // Call service method to process personalized product list
-        shopperService.processPersonalizedProductList(productListDTO);
+        shopperService.processPersonalizedProductList(shopperProductDtoList);
         return ResponseEntity.ok("Personalized product list received and processed successfully.");
     }
 
@@ -30,6 +35,14 @@ public class ShopperController {
     {
         System.out.println( productRepository.findAll());
     }
+
+
+    @PostMapping("/shopper/shopper-list")
+    public ResponseEntity<?> saveShoppers(@Valid @RequestBody List<Shoppers> shopper) {
+        shopperService.saveShopperMetadata(shopper);
+        return ResponseEntity.ok().build();
+    }
+
 
 
 /*
