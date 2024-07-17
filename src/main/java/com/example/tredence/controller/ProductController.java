@@ -18,7 +18,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    ProductService productServic;
 
     @PostMapping("/product-metadata")
     public ResponseEntity<?> saveProductMetadata(@Valid @RequestBody List<Products> products) {
