@@ -23,6 +23,6 @@ public class ProductController {
     @PostMapping("/product-metadata")
     public ResponseEntity<?> saveProductMetadata(@Valid @RequestBody List<Products> products) {
         productService.saveProductMetadata(products);
-        return ResponseEntity.ok().build();
+        return ResponseEntit.ok().build();
     }
 }
